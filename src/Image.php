@@ -18,7 +18,10 @@ class Image
 
     // prefix for tmp files
     const TMP_PREFIX = 'tmp_wkhtmlto_pdf_';
-
+    
+    // Regular expression to detect URL strings
+    const REGEX_URL = '/^(https?:)?\/\//i';
+    
     /**
      * @var string the name of the `wkhtmltoimage` binary. Default is
      * `wkhtmltoimage`. You can also configure a full path here.
@@ -101,7 +104,7 @@ class Image
      */
     public function setPage($page)
     {
-        $this->_page = preg_match(self::REGEX_HTML, $page) ? new File($page, '.html') : $page;
+        $this->_page = preg_match(self::REGEX_URL, $page) ? $page : new File($page, '.html');
         return $this;
     }
 
